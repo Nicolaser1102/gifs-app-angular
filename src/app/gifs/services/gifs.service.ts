@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Gif, SearchResponse } from '../interfaces/gifs.interfaces';
+import { retry } from 'rxjs';
 
 
 
@@ -46,6 +47,8 @@ export class GifsService {
   private loadLocalStorage():void{
     if (!localStorage.getItem('history')) return;
     this._tagsHistory = JSON.parse(localStorage.getItem('history')!);
+
+    if(this._tagsHistory.length === 0) return;
     this.searchTag(this._tagsHistory[0]);
   }
 
